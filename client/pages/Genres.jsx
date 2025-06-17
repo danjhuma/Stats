@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'; import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import axios from '../utils/axios';
 
 const Genres = () => { const [genres, setGenres] = useState([]);
 
