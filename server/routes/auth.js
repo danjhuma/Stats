@@ -10,7 +10,7 @@ router.get("/login", (req, res) => { const scope = [ "user-read-private", "user-
 
 const queryParams = querystring.stringify({ response_type: "code", client_id: process.env.CLIENT_ID, scope, redirect_uri, });
 
-res.redirect(https://accounts.spotify.com/authorize?${queryParams}); });
+res.redirect(`https://accounts.spotify.com/authorize?${queryParams}`);
 
 router.get("/callback", async (req, res) => { const code = req.query.code || null; const authOptions = { method: "post", url: "https://accounts.spotify.com/api/token", data: querystring.stringify({ code, redirect_uri, grant_type: "authorization_code", }), headers: { "Content-Type": "application/x-www-form-urlencoded", Authorization: "Basic " + Buffer.from( process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET ).toString("base64"), }, };
 
