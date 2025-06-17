@@ -1,9 +1,11 @@
+import { Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+
 const App = () => {
   return (
-    <div style={{ padding: '2rem', textAlign: 'center' }}>
-      <h1>App Loaded Successfully ✅</h1>
-      <p>If you see this, routing and mounting work fine.</p>
-    </div>
+    <Routes>
+      <Route path="/" element={<Login />} />
+    </Routes>
   );
 };
 
