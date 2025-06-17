@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../utils/axios';
+
 
 const Callback = () => {
   const navigate = useNavigate();
@@ -10,7 +11,7 @@ const Callback = () => {
 
     if (code) {
       axios
-        .get(`https://your-backend.onrender.com/callback?code=${code}`)
+        .get(`https://stats-5x3u.onrender.com/callback?code=${code}`)
         .then(() => {
           // Login successful, redirect to stats
           navigate('/top-tracks');
