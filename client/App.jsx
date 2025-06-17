@@ -1,11 +1,12 @@
+
 import { Routes, Route } from 'react-router-dom';
 import Login from './pages/Login';
+import Callback from './pages/Callback';
 
 const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
-      import Callback from './pages/Callback';
      <Route path="/callback" element={<Callback />} />
     </Routes>
   );
