@@ -8,7 +8,7 @@ const AudioAnalysis = () => {
   const fetchFeatures = () => {
     if (!trackId) return;
     axios
-      .get(`/api/audio-analysis/${trackId}`)
+      .get(`${import.meta.env.VITE_API_BASE_URL}/api/audio-analysis/${trackId}`)
       .then((res) => setFeatures(res.data))
       .catch((err) => console.error(err));
   };
