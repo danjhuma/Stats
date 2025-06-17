@@ -5,6 +5,8 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Login />} />
+      import Callback from './pages/Callback';
+     <Route path="/callback" element={<Callback />} />
     </Routes>
   );
 };
