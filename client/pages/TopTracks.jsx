@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../utils/axios';
 
 const timeRanges = [
   { label: '4 Weeks', value: 'short_term' },
