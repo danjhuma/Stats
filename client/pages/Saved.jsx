@@ -6,7 +6,7 @@ const Saved = () => { const [tracks, setTracks] = useState([]); const [playlists
 
 useEffect(() => { axios.get('/api/saved/tracks') .then(res => setTracks(res.data.items)) .catch(err => console.error(err));
 
-axios.get('/api/saved/playlists')
+axios.get('${import.meta.env.VITE_API_BASE_URL}/api/saved/playlists')
   .then(res => setPlaylists(res.data.items))
   .catch(err => console.error(err));
 
