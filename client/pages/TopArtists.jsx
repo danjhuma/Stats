@@ -13,7 +13,7 @@ const TopArtists = () => {
 
   useEffect(() => {
     axios
-      .get(`/api/top/artists?time_range=${range}`)
+      .get(`${import.meta.env.VITE_API_BASE_URL}/api/top/artists?time_range=${range}`)
       .then((res) => setArtists(res.data.items))
       .catch((err) => console.error(err));
   }, [range]);
