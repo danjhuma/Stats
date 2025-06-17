@@ -10,5 +10,6 @@ app.use("/auth", authRoutes); app.use("/api", apiRoutes);
 
 app.get("/", (req, res) => { res.send("Spotify Stats Backend is running"); });
 
-app.listen(PORT, () => { console.log(Server running on port ${PORT}); });
-
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
