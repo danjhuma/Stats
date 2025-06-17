@@ -4,7 +4,7 @@ import axios from '../utils/axios';
 
 const Saved = () => { const [tracks, setTracks] = useState([]); const [playlists, setPlaylists] = useState([]);
 
-useEffect(() => { axios.get('/api/saved/tracks') .then(res => setTracks(res.data.items)) .catch(err => console.error(err));
+useEffect(() => { axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/saved/tracks`) .then(res => setTracks(res.data.items)) .catch(err => console.error(err));
 
 axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/saved/playlists`)
   .then(res => setPlaylists(res.data.items))
