@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react'; import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+
+import axios from '../utils/axios';
 
 const Saved = () => { const [tracks, setTracks] = useState([]); const [playlists, setPlaylists] = useState([]);
 
