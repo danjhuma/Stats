@@ -1,10 +1,10 @@
-// server/routes/auth.js import express from "express"; import axios from "axios"; import querystring from "querystring"; import dotenv from "dotenv";
+import express from "express"; import axios from "axios"; import querystring from "querystring"; import dotenv from "dotenv";
 
 dotenv.config();
 
 const router = express.Router();
 
-const redirect_uri = ${process.env.BACKEND_URL}/auth/callback;
+const redirect_uri = `${process.env.CALLBACK_URI}`;
 
 router.get("/login", (req, res) => { const scope = [ "user-read-private", "user-read-email", "user-top-read", "user-read-recently-played", "user-library-read", "playlist-read-private", "playlist-read-collaborative", "user-read-playback-state", "user-read-currently-playing", "user-read-playback-position", "user-read-recently-played", "user-read-private", "user-library-read", "user-read-email" ].join(" ");
 
