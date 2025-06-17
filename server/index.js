@@ -1,4 +1,4 @@
-// server/index.js import express from "express"; import dotenv from "dotenv"; import cors from "cors"; import session from "express-session"; import authRoutes from "./routes/auth.js"; import apiRoutes from "./routes/api.js";
+import express from "express"; import dotenv from "dotenv"; import cors from "cors"; import session from "express-session"; import authRoutes from "./routes/auth.js"; import apiRoutes from "./routes/api.js";
 
 dotenv.config();
 
