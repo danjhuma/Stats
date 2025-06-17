@@ -1,0 +1,23 @@
+body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transition: background-color 0.3s, color 0.3s; }
+
+.light { background-color: #f4f4f4; color: #111; }
+
+.dark { background-color: #111; color: #f4f4f4; }
+
+.app-container { max-width: 900px; margin: auto; padding: 20px; }
+
+nav { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 20px; }
+
+nav a { text-decoration: none; padding: 8px 14px; border-radius: 8px; background: #ccc; color: #000; transition: background 0.3s; }
+
+nav a:hover { background: #aaa; }
+
+button { padding: 8px 14px; border: none; border-radius: 6px; cursor: pointer; background-color: #888; color: white; }
+
+input[type="text"] { padding: 8px; width: 100%; max-width: 400px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; }
+
+ul { list-style: none; padding: 0; }
+
+li { margin: 6px 0; padding: 4px 0; border-bottom: 1px solid #ddd; }
+
+             
