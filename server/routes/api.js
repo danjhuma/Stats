@@ -2,7 +2,7 @@ import express from "express"; import axios from "axios";
 
 const router = express.Router();
 
-function getHeaders(token) { return { headers: { Authorization: Bearer ${token}, }, }; }
+function getHeaders(token) { return { headers: { Authorization: `Bearer ${token}`, }, }; }
 
 router.get("/me", async (req, res) => { try { const response = await axios.get("https://api.spotify.com/v1/me", getHeaders(req.session.access_token)); res.json(response.data); } catch (err) { res.status(401).json({ error: "Unauthorized" }); } });
 
