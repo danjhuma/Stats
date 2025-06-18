@@ -1,44 +1,36 @@
-// src/App.jsx
-import React from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+// App.jsx
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Layout from './components/Layout.jsx';
+import Login from './pages/Login.jsx';
+import Callback from './pages/Callback.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import Genres from './pages/Genres.jsx';
+import Recent from './pages/Recent.jsx';
+import Saved from './pages/Saved.jsx';
+import TopArtists from './pages/TopArtists.jsx';
+import TopTracks from './pages/TopTracks.jsx';
+import AudioAnalysis from './pages/AudioAnalysis.jsx';
 
-// Pages
-import Login from "./pages/Login";
-import Callback from "./pages/Callback";
-import Dashboard from "./pages/Dashboard";
-import TopTracks from "./pages/TopTracks";
-import TopArtists from "./pages/TopArtists";
-import Recent from "./pages/Recent";
-import AudioAnalysis from "./pages/AudioAnalysis";
-import Saved from "./pages/Saved";
-import Genres from "./pages/Genres";
-
-const App = () => {
-  const isAuthenticated = localStorage.getItem("access_token");
-
+function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/callback" element={<Callback />} />
+    <Routes>
+      {/* Public routes */}
+      <Route path="/" element={<Login />} />
+      <Route path="/callback" element={<Callback />} />
 
-        {isAuthenticated && (
-          <>
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/top-tracks" element={<TopTracks />} />
-            <Route path="/top-artists" element={<TopArtists />} />
-            <Route path="/recent" element={<Recent />} />
-            <Route path="/audio-analysis" element={<AudioAnalysis />} />
-            <Route path="/saved" element={<Saved />} />
-            <Route path="/genres" element={<Genres />} />
-          </>
-        )}
-
-        {/* Redirect unknown routes to login */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
-    </Router>
+      {/* Protected routes with shared layout */}
+      <Route element={<Layout />}>
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="genres" element={<Genres />} />
+        <Route path="recent" element={<Recent />} />
+        <Route path="saved" element={<Saved />} />
+        <Route path="top-artists" element={<TopArtists />} />
+        <Route path="top-tracks" element={<TopTracks />} />
+        <Route path="audio-analysis" element={<AudioAnalysis />} />
+      </Route>
+    </Routes>
   );
-};
+}
 
 export default App;
