@@ -1,43 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../utils/axios';
 
-const timeRanges = [
-  { label: '4 Weeks', value: 'short_term' },
-  { label: '6 Months', value: 'medium_term' },
-  { label: 'All Time', value: 'long_term' },
-];
-
-const TopTracks = () => {
+export default function TopTracks() {
   const [tracks, setTracks] = useState([]);
-  const [range, setRange] = useState('short_term');
+  const [range, setRange] = useState('medium_term');
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_BASE_URL}/api/top/tracks?time_range=${range}`)
+      .get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/top/tracks?time_range=${range}`
+      )
       .then((res) => setTracks(res.data.items))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error('TopTracks error:', err));
   }, [range]);
 
   return (
-    <div className="top-tracks-page">
-      <h2>Top Tracks</h2>
+    <div>
+      <h1>Top Tracks</h1>
       <select value={range} onChange={(e) => setRange(e.target.value)}>
-        {timeRanges.map((t) => (
-          <option key={t.value} value={t.value}>
-            {t.label}
-          </option>
-        ))}
+        <option value="short_term">4 Weeks</option>
+        <option value="medium_term">6 Months</option>
+        <option value="long_term">All Time</option>
       </select>
       <ul>
-        {tracks.map((track, index) => (
-          <li key={track.id}>
-            <strong>{index + 1}.</strong> {track.name} by{' '}
-            {track.artists.map((a) => a.name).join(', ')}
+        {tracks.map((t, i) => (
+          <li key={t.id}>
+            {i + 1}. {t.name} — {t.artists.map((a) => a.name).join(', ')}
           </li>
         ))}
       </ul>
     </div>
   );
-};
-
-export default TopTracks;
+}
