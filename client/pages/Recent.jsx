@@ -1,11 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../utils/axios';
 
-const Recent = () => { const [tracks, setTracks] = useState([]);
+export default function Recent() {
+  const [recent, setRecent] = useState([]);
 
-useEffect(() => { axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/recent`) .then(res => setTracks(res.data.items)) .catch(err => console.error(err)); }, []);
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_BASE_URL}/api/recent`)
+      .then((res) => setRecent(res.data.items || res.data))
+      .catch((err) => console.error('Recent error:', err));
+  }, []);
 
-return ( <div className="recent-page"> <h2>Recently Played</h2> <ul> {tracks.map((item, index) => ( <li key={index}> {item.track.name} by {item.track.artists.map(a => a.name).join(', ')} </li> ))} </ul> </div> ); };
-
-export default Recent;
-
+  return (
+    <div>
+      <h1>Recently Played</h1>
+      <ul>
+        {recent.map((entry, i) => {
+          const track = entry.track || entry;
+          return (
+            <li key={track.id || i}>
+              {track.name} by {track.artists?.map((a) => a.name).join(', ')}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+                                                                      }
