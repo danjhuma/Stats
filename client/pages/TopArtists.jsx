@@ -1,42 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from '../utils/axios';
 
-const timeRanges = [
-  { label: '4 Weeks', value: 'short_term' },
-  { label: '6 Months', value: 'medium_term' },
-  { label: 'All Time', value: 'long_term' },
-];
-
-const TopArtists = () => {
+export default function TopArtists() {
   const [artists, setArtists] = useState([]);
-  const [range, setRange] = useState('short_term');
+  const [range, setRange] = useState('medium_term');
 
   useEffect(() => {
     axios
-      .get(`${import.meta.env.VITE_API_BASE_URL}/api/top/artists?time_range=${range}`)
+      .get(
+        `${import.meta.env.VITE_API_BASE_URL}/api/top/artists?time_range=${range}`
+      )
       .then((res) => setArtists(res.data.items))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error('TopArtists error:', err));
   }, [range]);
 
   return (
-    <div className="top-artists-page">
-      <h2>Top Artists</h2>
+    <div>
+      <h1>Top Artists</h1>
       <select value={range} onChange={(e) => setRange(e.target.value)}>
-        {timeRanges.map((t) => (
-          <option key={t.value} value={t.value}>
-            {t.label}
-          </option>
-        ))}
+        <option value="short_term">4 Weeks</option>
+        <option value="medium_term">6 Months</option>
+        <option value="long_term">All Time</option>
       </select>
       <ul>
-        {artists.map((artist, index) => (
-          <li key={artist.id}>
-            <strong>{index + 1}.</strong> {artist.name}
+        {artists.map((a, i) => (
+          <li key={a.id}>
+            {i + 1}. {a.name}
           </li>
         ))}
       </ul>
     </div>
   );
-};
-
-export default TopArtists;
+}
