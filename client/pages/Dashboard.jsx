@@ -1,12 +1,38 @@
-import React, { useEffect, useState } from 'react'; 
+import React, { useEffect, useState } from 'react';
+import axios from '../utils/axios';  // Import shared axios instance
 
-import axios from '../utils/axios'; 
+export default function Dashboard() {
+  const [stats, setStats] = useState(null);
 
-const Dashboard = () => { const [user, setUser] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // GET user stats; include auth header if needed
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/dashboard`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+          }
+        );
+        setStats(response.data);
+      } catch (error) {
+        console.error('Dashboard fetch error:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
-useEffect(() => { axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/me`) .then(res => setUser(res.data)) .catch(err => console.error(err)); }, []);
-
-return ( <div className="dashboard-page"> <h2>Dashboard</h2> {user ? ( <div> <img src={user.images?.[0]?.url} alt="Profile" width={100} /> <h3>{user.display_name}</h3> <p>{user.email}</p> <a href={user.external_urls.spotify} target="_blank" rel="noopener noreferrer"> View Spotify Profile </a> </div> ) : ( <p>Loading profile...</p> )} </div> ); };
-
-export default Dashboard;
-
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      {stats ? (
+        // Render fetched stats (adjust UI as needed)
+        <pre>{JSON.stringify(stats, null, 2)}</pre>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
+            }
