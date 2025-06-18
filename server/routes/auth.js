@@ -7,9 +7,10 @@ dotenv.config();
 
 const router = express.Router();
 
-const redirect_uri = `${process.env.REDIRECT_URI}`;
+// Use exact REDIRECT_URI as registered in Spotify dashboard
+const redirect_uri = process.env.REDIRECT_URI;
 
-// Login Route
+// LOGIN ROUTE
 router.get("/login", (req, res) => {
   const scope = [
     "user-read-private",
@@ -31,38 +32,45 @@ router.get("/login", (req, res) => {
     redirect_uri,
   });
 
-  res.redirect(`https://accounts.spotify.com/authorize?${queryParams}`);
+  const authUrl = `https://accounts.spotify.com/authorize?${queryParams}`;
+  res.redirect(authUrl);
 });
 
-// Callback Route
+// CALLBACK ROUTE
 router.get("/callback", async (req, res) => {
-  const code = req.query.code || null;
+  const code = req.query.code;
 
-  const authOptions = {
-    method: "post",
-    url: "https://accounts.spotify.com/api/token",
-    data: querystring.stringify({
-      code,
-      redirect_uri,
-      grant_type: "authorization_code",
-    }),
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization:
-        "Basic " +
-        Buffer.from(
-          process.env.CLIENT_ID + ":" + process.env.CLIENT_SECRET
-        ).toString("base64"),
-    },
-  };
+  if (!code) {
+    return res.status(400).json({ error: "Missing code in callback" });
+  }
 
   try {
-    const response = await axios(authOptions);
-    req.session.access_token = response.data.access_token;
-    req.session.refresh_token = response.data.refresh_token;
+    const tokenResponse = await axios({
+      method: "post",
+      url: "https://accounts.spotify.com/api/token",
+      data: querystring.stringify({
+        code,
+        redirect_uri,
+        grant_type: "authorization_code",
+      }),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization:
+          "Basic " +
+          Buffer.from(
+            `${process.env.CLIENT_ID}:${process.env.CLIENT_SECRET}`
+          ).toString("base64"),
+      },
+    });
+
+    const { access_token, refresh_token } = tokenResponse.data;
+
+    req.session.access_token = access_token;
+    req.session.refresh_token = refresh_token;
+
     res.redirect(`${process.env.CLIENT_URL}/dashboard`);
   } catch (error) {
-    console.error("Callback error:", error.response?.data || error.message);
+    console.error("Callback Error:", error.response?.data || error.message);
     res.status(500).json({ error: "Authentication failed" });
   }
 });
