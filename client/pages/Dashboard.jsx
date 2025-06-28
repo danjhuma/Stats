@@ -18,6 +18,7 @@ export default function Dashboard() {
   return (
     <div>
       <h1>Dashboard</h1>
+      <h1>Dashboard {profile.display_name}</h1>
       {profile ? (
         <pre>{JSON.stringify(profile, null, 2)}</pre>
       ) : (
