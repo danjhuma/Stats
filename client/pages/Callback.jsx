@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../utils/axios';  // Shared instance
+import axios from '../utils/axios';  // Use shared axios instance
 
 export default function Callback() {
   const navigate = useNavigate();
@@ -18,10 +18,11 @@ export default function Callback() {
     if (code) {
       axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/auth/callback`,
-        { code }
+        { code },
+        { withCredentials: true } // Important: include credentials if your session is cookie-based
       )
       .then((res) => {
-        localStorage.setItem('token', res.data.token);
+        // Optionally save a flag or navigate directly
         navigate('/dashboard');
       })
       .catch((err) => {
@@ -31,4 +32,4 @@ export default function Callback() {
   }, [navigate]);
 
   return <div>Processing login...</div>;
-        }
+}
