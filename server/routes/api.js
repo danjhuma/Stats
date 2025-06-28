@@ -20,6 +20,7 @@ router.get("/me", async (req, res) => {
       getHeaders(req.session.access_token)
     );
     res.json(response.data);
+    console.log('Session:', req.session);
   } catch (err) {
     res.status(401).json({ error: "Unauthorized" });
   }
