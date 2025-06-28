@@ -1,38 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import axios from '../utils/axios';  // Import shared axios instance
+import axios from '../utils/axios';  // Use shared axios instance
 
 export default function Dashboard() {
-  const [stats, setStats] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // GET user stats; include auth header if needed
-        const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/dashboard`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-          }
-        );
-        setStats(response.data);
-      } catch (error) {
-        console.error('Dashboard fetch error:', error);
-      }
-    };
-    fetchData();
+    axios
+      .get(`${import.meta.env.VITE_API_BASE_URL}/api/me`)
+      .then((res) => setUser(res.data))
+      .catch((err) => console.error('Dashboard fetch error:', err));
   }, []);
 
   return (
     <div>
       <h1>Dashboard</h1>
-      {stats ? (
-        // Render fetched stats (adjust UI as needed)
-        <pre>{JSON.stringify(stats, null, 2)}</pre>
+      {user ? (
+        <pre>{JSON.stringify(user, null, 2)}</pre>
       ) : (
         <p>Loading...</p>
       )}
     </div>
   );
-            }
+    }
