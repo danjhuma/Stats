@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../utils/axios';  // Import shared axios instance
+import axios from '../utils/axios';  // Shared instance
 
 export default function Callback() {
   const navigate = useNavigate();
@@ -16,9 +16,8 @@ export default function Callback() {
     }
 
     if (code) {
-      // Exchange OAuth code for tokens on backend
       axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/callback`,
+        `${import.meta.env.VITE_API_BASE_URL}/auth/callback`,
         { code }
       )
       .then((res) => {
@@ -32,4 +31,4 @@ export default function Callback() {
   }, [navigate]);
 
   return <div>Processing login...</div>;
-}
+        }
